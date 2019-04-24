@@ -2,6 +2,36 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+
+
+// class Lista extends Component{
+//   render(){
+//     console.log(this.props)
+//     return(<div>
+//         <ol>
+//           {this.props.map((p)=><li>{p}</li>)}
+//         </ol>
+//        </div>
+//     )
+//   }
+// }
+
+// export default Lista
+// class ListContacts extends Component{
+
+//   render(){
+//     console.log(this.props , 'props')
+//     return(
+//       <ol>
+
+//       {this.props.map((p)=><li>{p}</li>)}
+      
+//       </ol>
+//     )
+//   }
+// }
+
+
 class ListContacts extends Component {
   static propTypes = {
     contacts: PropTypes.array.isRequired,
