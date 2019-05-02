@@ -1,91 +1,71 @@
-import React , {Component} from 'react'
+import { Link } from 'react-router-dom'
 
-class Family extends Component{
-   state={
-      text:''
-   }
-   
-   changeText(value){
-      
-      this.setState(()=>({
-         text:value
+import React, { Component } from 'react'
+import ListContacts from './ListContacts'
+import Lista from './ListContacts'
+import * as ContactsAPI from './utils/ContactsAPI'
+import CreateContact from './CreateContact'
+import { Route } from 'react-router-dom'
+
+
+
+
+class App extends Component {
+  state = {
+    contacts: [
+ 
+    ]
+  }
+  componentDidMount(){
+     ContactsAPI.getAll().then((contacts)=>{this.setState(()=>({contacts}))})
+  }
+
+  removeContact = (contact) => {
+    this.setState((currentState) => ({
+      contacts: currentState.contacts.filter((c) => {
+        return c.id !== contact.id
+      })
+    }))
+
+    ContactsAPI.remove(contact)
+  }
+
+
+createContact=(contact)=>{
+   ContactsAPI.create(contact).then((contact)=>{
+      this.setState((current)=>({
+         contact:current.contacts.concat([contact])
       }))
-   }
-   rest(){
-      this.setState(()=>({
-         text:''
-      }))
-      
-   }
-   render(){
-      const actualData=this.state.text===''?this.props.members: this.props.members.filter((r)=>r.name.includes(this.state.text))
-   
-      return<div>
+   })
+}
 
-      <table>
-         <tr id="t01"><th>Firstname</th><th>Age</th> <th>Gender</th> <th>hoppy</th>  </tr>
-         {actualData.map((e)=><tr>
-            <th  key={e.name}> {e.name}   <button onClick={()=>this.props.delete(e)}>delete</button> </th>
-            <th key={e.age}>{e.age} </th>
-            <th key={e.job}>{e.jop} </th>
-            <th key={e.hoppy}>{e.hoppy } </th>
-         </tr>)}
-         </table>
-
-         <input value={this.state.text} placeholder="search" onChange={(event)=>this.changeText(event.target.value)}  ></input> 
-         {this.state.text!==''&& <span>showing{actualData.length} member from {this.props.members.lenght} kaka <button onClick={()=>this.rest()}>reset</button> </span>}
-         <h1>{this.state.text}</h1>
+//   createContact = (contact) => {
+//     ContactsAPI.create(contact)
+//       .then((contact) => {
+//         this.setState((currentState) => ({
+//           contacts: currentState.contacts.concat([contact])
+//         }))
+//       })
+//   }
+  render() {
+    return (
+      <div>
+        <Route exact path="/" render={()=>(
+           <ListContacts
+            contacts={this.state.contacts}
+            onDeleteContact={this.removeContact}
+            />
+            )}/>
+        <Route path="/create" render={({history})=>(
+            <CreateContact onCreateContact={(con)=>{
+               this.createContact(con)
+               history.push('/')
+               // console.log(history , history.push('/'))
+            }}/>
+         )}/>
+       
       </div>
-   }
-}
-
-class App extends Component{
-  state={
-   members:[
-      {
-         "name":"mahmoud" ,
-         "age": 15,
-         "hoppy" :"drawing" ,
-         "jop" :"engineer" ,
-      },
-      {
-         "name":"hosasm" ,
-         "age":91 ,
-         "hoppy" : "dansing" ,
-         "jop" :"engineer" ,
-      },
-      {
-         "name":"sara" ,
-         "age": 23,
-         "hoppy" : "blow job" ,
-         "jop" : "bitch",
-      },
-      {
-         "name": "amira",
-         "age": 20,
-         "hoppy" : "loving me" ,
-         "jop" :"nurce" ,
-      },
-      {
-         "name": "heba",
-         "age":22 ,
-         "hoppy" : "drawing",
-         "jop" : "doctor",
-      },
-   ]
-}
-
-delete=(e)=>{
-   this.setState(()=> ({ 
-   members:this.state.members.filter((s)=>s.name!==e.name)
-}))
-}
-
-
-  render(){
-     return <div>
-        <Family members={this.state.members} delete={this.delete} ></Family>
-     </div>
+    )
   }
 }
 

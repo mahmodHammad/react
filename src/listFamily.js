@@ -35,11 +35,11 @@ class Home extends Component{
         value={this.state.text} 
         onChange={(event)=>this.updateText(event.target.value)}>
         </input>
-{actualData !==this.props.mems &&(
+    {actualData !==this.props.mems &&(
   <div> showing {actualData.length} of {this.props.mems.length} <span><button onClick={this.reset}>show all</button></span> </div>
 )}        
       <h1>{this.state.text}</h1>
-     </div>    )
+     </div> )
   }
 }
 
