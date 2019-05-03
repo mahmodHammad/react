@@ -30,6 +30,12 @@ ul li {
   color: navy;
 list-style: none;
 }
+.hd{
+  color: brown;
+  text-align: center;
+  padding: 10px;
+  margin-top: 40px;
+}
 
 
 table {

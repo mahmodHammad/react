@@ -47,7 +47,7 @@ const users = [
 const movies = [
  {
     id: 1,
-    name: 'Porn',
+    name: 'tom and jerry',
   },
  {
     id: 2,
@@ -61,10 +61,15 @@ const movies = [
 
 class LikedList extends Component{
   render(){
+    let flage=0;
+    this.props.users.map((f)=>{
+        if(f.id=== this.props.movieid)
+          flage=1;
+      })
+  
     return <ul>
-      {this.props.users.map((f)=>
-        f.id=== this.props.movieid&& <li>{f.name}</li>   )}
-        
+      {flage===0 &&<h2>no one</h2>}
+      {flage ===1 && this.props.users.map((f)=> f.id ===this.props.movieid && <li>{f.name}</li> )}    
     </ul>
   }
 
@@ -74,9 +79,11 @@ class Movies extends Component{
   render(){
     return(
       <ul >
+        <h1 className="hd">Movies List</h1>
         {this.props.movies.map((a)=>(
           <div className="bord">
             <h3> {a.name} </h3>
+            <h5>Watched by </h5>
             <LikedList movie={a.name} movieid={a.id} users={this.props.users}/>
           </div>
         ))}
