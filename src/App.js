@@ -1,69 +1,95 @@
 import { Link } from 'react-router-dom'
-
 import React, { Component } from 'react'
 import ListContacts from './ListContacts'
-import Lista from './ListContacts'
 import * as ContactsAPI from './utils/ContactsAPI'
 import CreateContact from './CreateContact'
 import { Route } from 'react-router-dom'
 
-
-
-
-class App extends Component {
-  state = {
-    contacts: [
- 
-    ]
+const profiles = [
+  {
+    id: 1,
+    userID: '1',
+    favoriteMovieID: '1',
+  },
+  {
+    id: 2,
+    userID: '2',
+    favoriteMovieID: '2',
   }
-  componentDidMount(){
-     ContactsAPI.getAll().then((contacts)=>{this.setState(()=>({contacts}))})
+];
+const users = [
+  {
+    id: 1,
+    name: 'Jane Cruz',
+    userName: 'coder',
+  },
+  {
+    id: 2,
+    name: 'mahmoud hammad',
+    userName: 'fucker',
+  },
+  {
+    id: 2,
+    name: 'mahmoud',
+    userName: 'fucker',
+  },
+  {
+    id: 2,
+    name: ' hammad',
+    userName: 'fucker',
+  },
+  {
+    id: 1,
+    name: 'mahmoud hammad',
+    userName: 'fucker',
+  },
+]
+const movies = [
+ {
+    id: 1,
+    name: 'Porn',
+  },
+ {
+    id: 2,
+    name: 'the avengers END GAME',
+  },
+ {
+    id: 3,
+    name: 'خوستيقه',
+  },
+]
+
+class LikedList extends Component{
+  render(){
+    return <ul>
+      {this.props.users.map((f)=>
+        f.id=== this.props.movieid&& <li>{f.name}</li>   )}
+        
+    </ul>
   }
 
-  removeContact = (contact) => {
-    this.setState((currentState) => ({
-      contacts: currentState.contacts.filter((c) => {
-        return c.id !== contact.id
-      })
-    }))
-
-    ContactsAPI.remove(contact)
-  }
-
-
-createContact=(contact)=>{
-   ContactsAPI.create(contact).then((contact)=>{
-      this.setState((current)=>({
-         contact:current.contacts.concat([contact])
-      }))
-   })
 }
 
-//   createContact = (contact) => {
-//     ContactsAPI.create(contact)
-//       .then((contact) => {
-//         this.setState((currentState) => ({
-//           contacts: currentState.contacts.concat([contact])
-//         }))
-//       })
-//   }
-  render() {
+class Movies extends Component{
+  render(){
+    return(
+      <ul >
+        {this.props.movies.map((a)=>(
+          <div className="bord">
+            <h3> {a.name} </h3>
+            <LikedList movie={a.name} movieid={a.id} users={this.props.users}/>
+          </div>
+        ))}
+      </ul>
+    )
+  }
+}
+
+class App extends Component {
+render() {
     return (
       <div>
-        <Route exact path="/" render={()=>(
-           <ListContacts
-            contacts={this.state.contacts}
-            onDeleteContact={this.removeContact}
-            />
-            )}/>
-        <Route path="/create" render={({history})=>(
-            <CreateContact onCreateContact={(con)=>{
-               this.createContact(con)
-               history.push('/')
-               // console.log(history , history.push('/'))
-            }}/>
-         )}/>
-       
+        <Movies profiles={profiles} users={users} movies={movies}/>
       </div>
     )
   }

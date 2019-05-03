@@ -18,6 +18,20 @@ body, .app {
 }
 
 
+.bord{
+  border:greenyellow 2px solid;
+  background:#ddd;
+  margin: 50px;
+  padding: 11px;
+  text-align: center; 
+}
+
+ul li {
+  color: navy;
+list-style: none;
+}
+
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
