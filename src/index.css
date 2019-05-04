@@ -12,10 +12,14 @@ body {
   padding: 0;
   font-family: sans-serif;
   line-height: 1.5;
+  background-image: url("a.jpg");
+  background-clip: border-box;
+  background-attachment: fixed;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
-body, .app {
-  background: #f5f5f5;
-}
+
 
 .false , .true {
 padding: 20px 13px;
@@ -36,11 +40,15 @@ border-radius: 222px;
 }
 .game{
   text-align: center;
+width: 100%;
+  margin: auto;
   padding: 10% 0;
+  height: 100%;
+    
 }
 .score{
   border:1px salmon ridge ;
-  width:25%;
+  width:22%;
   border-radius: 10px;
   background: cornsilk;
   margin:50px  auto;
