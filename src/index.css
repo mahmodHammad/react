@@ -17,7 +17,16 @@ body, .app {
   background: #f5f5f5;
 }
 
-
+.false , .true {
+padding: 20px 13px;
+font: 900;
+color: navy;
+margin:  0 33px;
+border: none;
+border-radius: 222px;
+}
+.false{background:tomato; }
+.true{background:rgb(28, 224, 55); }
 .bord{
   border:greenyellow 2px solid;
   background:#ddd;
@@ -25,7 +34,29 @@ body, .app {
   padding: 11px;
   text-align: center; 
 }
+.game{
+  text-align: center;
+  padding: 10% 0;
+}
+.score{
+  border:1px salmon ridge ;
+  width:25%;
+  border-radius: 10px;
+  background: cornsilk;
+  margin:50px  auto;
+}
 
+.score h4{
+  background: #fff;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 0px;
+  border-radius: 10px;
+}
+.pass{
+  color: green
+}
+.fall{color: hotpink}
 ul li {
   color: navy;
 list-style: none;

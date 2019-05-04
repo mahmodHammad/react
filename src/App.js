@@ -5,100 +5,78 @@ import * as ContactsAPI from './utils/ContactsAPI'
 import CreateContact from './CreateContact'
 import { Route } from 'react-router-dom'
 
-const profiles = [
-  {
-    id: 1,
-    userID: '1',
-    favoriteMovieID: '1',
-  },
-  {
-    id: 2,
-    userID: '2',
-    favoriteMovieID: '2',
-  }
-];
-const users = [
-  {
-    id: 1,
-    name: 'Jane Cruz',
-    userName: 'coder',
-  },
-  {
-    id: 2,
-    name: 'mahmoud hammad',
-    userName: 'fucker',
-  },
-  {
-    id: 2,
-    name: 'mahmoud',
-    userName: 'fucker',
-  },
-  {
-    id: 2,
-    name: ' hammad',
-    userName: 'fucker',
-  },
-  {
-    id: 1,
-    name: 'mahmoud hammad',
-    userName: 'fucker',
-  },
-]
-const movies = [
- {
-    id: 1,
-    name: 'tom and jerry',
-  },
- {
-    id: 2,
-    name: 'the avengers END GAME',
-  },
- {
-    id: 3,
-    name: 'خوستيقه',
-  },
-]
+const numQuestions = 0;
+const numCorrect = 0;
 
-class LikedList extends Component{
-  render(){
-    let flage=0;
-    this.props.users.map((f)=>{
-        if(f.id=== this.props.movieid)
-          flage=1;
-      })
-  
-    return <ul>
-      {flage===0 &&<h2>no one</h2>}
-      {flage ===1 && this.props.users.map((f)=> f.id ===this.props.movieid && <li>{f.name}</li> )}    
-    </ul>
-  }
 
-}
-
-class Movies extends Component{
-  render(){
-    return(
-      <ul >
-        <h1 className="hd">Movies List</h1>
-        {this.props.movies.map((a)=>(
-          <div className="bord">
-            <h3> {a.name} </h3>
-            <h5>Watched by </h5>
-            <LikedList movie={a.name} movieid={a.id} users={this.props.users}/>
-          </div>
-        ))}
-      </ul>
-    )
-  }
-}
 
 class App extends Component {
-render() {
+  
+  state={
+    score:0,
+    question :0
+  }
+  
+  validate=(v1 ,v2 ,v3 ,ans ,t)=>{
+    let correct =v1+v2+v3;
+    if(t===1){
+      if(correct===ans){
+        this.setState({
+        score:this.state.score+1 ,
+        question:this.state.question+1
+      })
+      }
+      else{
+        this.setState({
+          score:this.state.score ,
+          question:this.state.question+1
+        })
+      }
+    } 
+    else{
+      if(correct!==ans){
+        this.setState({
+        score:this.state.score+1 ,
+        question:this.state.question+1
+      })
+      }
+      else{
+        this.setState({
+          score:this.state.score ,
+          question:this.state.question+1
+        })
+      }
+    }
+  }
+      
+  
+
+  render() {
+    const value1 = Math.floor(Math.random() * 100);
+    const value2 = Math.floor(Math.random() * 100);
+    const value3 = Math.floor(Math.random() * 100);
+    const proposedAnswer = Math.floor(Math.random() * 3) + value1 + value2 + value3;
     return (
-      <div>
-        <Movies profiles={profiles} users={users} movies={movies}/>
+      <div className="App">
+        <div className="game">
+          <h2>Mental Math</h2>
+          <div className="equation">
+
+            <h1 className="text">{`${value1} + ${value2} + ${value3} = ${proposedAnswer}`}  </h1>
+          
+          </div>
+          <button onClick={()=>this.validate(value1 ,value2 ,value3 ,proposedAnswer ,1)} className="true" >True</button>
+          <button onClick={()=>this.validate(value1 ,value2 ,value3 ,proposedAnswer ,0) }className="false" >False</button>
+          <div className="text ">
+            <div className="score ">
+              <h3> Your Score</h3>
+              {Math.round(this.state.score / this.state.question *100) >49?<h4 className="pass"> {  this.state.question !==0&&Math.round(this.state.score / this.state.question *100)} %  </h4>:<h4 className="fall"> {  this.state.question !==0&&Math.round(this.state.score / this.state.question *100)} %  </h4>}
+              {/* <h4> {  this.state.question !==0&&Math.round(this.state.score / this.state.question *100)} %  </h4> */}
+            </div>
+          </div>
+        </div>
       </div>
-    )
+    );
   }
 }
 
